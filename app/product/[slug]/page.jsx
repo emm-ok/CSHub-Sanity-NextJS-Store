@@ -28,7 +28,7 @@ const Page = async ({ params }) => {
 
   return (
     <div>
-      <ProductDetails product={product} products={products} />
+      <ProductDetails product={product} />
 
       <div className='maylike-products-wrapper'>
         <h2>You may also like</h2>

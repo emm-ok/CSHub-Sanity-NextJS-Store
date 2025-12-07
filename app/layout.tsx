@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 
-import { Layout } from "../components";
+import { Footer, Navbar } from "../components";
 import { StateContext } from "../context/StateContext";
 
 const geistSans = Geist({
@@ -33,7 +33,11 @@ export default function RootLayout({
       >
         <StateContext>
           <Toaster />
-          <Layout>{children}</Layout>
+          <Navbar />
+          <div className="main-container">
+            {children}
+          </div>
+          <Footer />
         </StateContext>
       </body>
     </html>

@@ -7,7 +7,7 @@ import { urlFor } from '../lib/client'
 
 import { useStateContext } from '../context/StateContext'
 
-const ProductDetails = ({ product, products }) => {
+const ProductDetails = ({ product}) => {
     const [index, setIndex] = useState(0);
     const { name, description, price, images } = product;
     const { decQty, incQty, qty, onAdd, onBuyNow } = useStateContext();

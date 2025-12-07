@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { AiOutlineMinus, AiOutlinePlus, AiOutlineLeft, AiOutlineRight, AiOutlineShopping } from 'react-icons/ai'
 import Image from 'next/image'
@@ -10,13 +10,28 @@ import toast from 'react-hot-toast'
 
 import { useStateContext } from '@/context/StateContext'
 import { urlFor } from '../lib/client'
-// import CheckoutButton from './Checkout'
-import getStripe from '../lib/getStripe'
+// import getStripe from '../lib/getStripe'
 
 
 const Cart = () => {
   const cartRef = useRef();
-  const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQty, onRemove } = useStateContext();
+  const { totalPrice, totalQuantities, cartItems, showCart, setShowCart, toggleCartItemQty, onRemove } = useStateContext();
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if(cartRef.current && !cartRef.current.contains(event.target)) {
+        setShowCart(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [])
+
+  if(!showCart) return null;
+  
 
   const handleCheckout = async () => {
   // const stripe = await getStripe();
@@ -41,8 +56,8 @@ const Cart = () => {
 
 // await stripe.redirectToCheckout({ sessionId: data.id }); // ensure your API returns { id: session.id }
   return (
-    <div className='cart-wrapper' ref={cartRef}>
-      <div className='cart-container'>
+    <div className='cart-wrapper' >
+      <div className='cart-container' ref={cartRef}>
         <button type='button' className='cart-heading' onClick={() => setShowCart(false)}>
           <AiOutlineLeft />
           <span className='heading'>Your Cart</span>
