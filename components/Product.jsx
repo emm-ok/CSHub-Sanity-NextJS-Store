@@ -10,7 +10,6 @@ const Product = ({ product: { name, price, slug, description, stock, images } })
     <div>
       <Link href={`/product/${slug.current}`}>
         <div className='product-card'>
-          {console.log(images)}
           <Image 
             src={urlFor(images && images[randomIndex(images)].asset._ref).url()} 
             alt='product image' width={200} height={200}

@@ -15,11 +15,12 @@ import { urlFor } from '../lib/client'
 
 const Cart = () => {
   const cartRef = useRef();
-  const { totalPrice, totalQuantities, cartItems, showCart, setShowCart, toggleCartItemQty, onRemove } = useStateContext();
+  const { totalPrice, totalQuantities, cartItems, showCart, setShowCart, toggleCartItemQty, onRemove, onClearCart } = useStateContext();
+
 
   useEffect(() => {
     function handleClickOutside(event) {
-      if(cartRef.current && !cartRef.current.contains(event.target)) {
+      if (cartRef.current && !cartRef.current.contains(event.target)) {
         setShowCart(false);
       }
     }
@@ -30,31 +31,31 @@ const Cart = () => {
     }
   }, [])
 
-  if(!showCart) return null;
-  
+  if (!showCart) return null;
+
 
   const handleCheckout = async () => {
-  // const stripe = await getStripe();
-  const response = await fetch('/api/stripe', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ items: cartItems }), // send as object
-  });
-  
-  if (!response.ok) {
-    const text = await response.text();
-    console.error("Stripe error:", text);
-    return;
+    // const stripe = await getStripe();
+    const response = await fetch('/api/stripe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: cartItems }), // send as object
+    });
+
+    if (!response.ok) {
+      const text = await response.text();
+      console.error("Stripe error:", text);
+      return;
+    }
+
+    const data = await response.json();
+
+    toast.loading('Redirecting to Stripe...');
+
+    window.location.href = data.url
   }
 
-  const data = await response.json();
-  
-  toast.loading('Redirecting to Stripe...');
-
-  window.location.href = data.url
-}
-
-// await stripe.redirectToCheckout({ sessionId: data.id }); // ensure your API returns { id: session.id }
+  // await stripe.redirectToCheckout({ sessionId: data.id }); // ensure your API returns { id: session.id }
   return (
     <div className='cart-wrapper' >
       <div className='cart-container' ref={cartRef}>
@@ -80,7 +81,7 @@ const Cart = () => {
           {cartItems.length >= 1 && cartItems.map((item, index) => (
             <div className='product' key={item._id}>
               <Image
-                src={item?.images?.[0] && urlFor(item.images[0]).url() }
+                src={item?.images?.[0] && urlFor(item.images[0]).url()}
                 alt='product-image'
                 width={100} height={100}
                 className='cart-product-image' />
@@ -118,6 +119,7 @@ const Cart = () => {
               <h3>${totalPrice}</h3>
             </div>
             <div className='btn-container'>
+              <button type='button' className='clear-cart-btn' onClick={onClearCart}>Clear cart</button>
               <button type='button' className='btn' onClick={handleCheckout}>
                 Pay with Stripe
               </button>

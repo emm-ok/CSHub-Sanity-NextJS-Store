@@ -33,7 +33,7 @@ const Page = async ({ params }) => {
       <div className='maylike-products-wrapper'>
         <h2>You may also like</h2>
         <div className='marquee'>
-          <div className='maylike-products-container track'>
+          <div className='maylike-products-container'>
             {products.map((product) => (
               <Product key={product._id} product={product}/>
             ))}

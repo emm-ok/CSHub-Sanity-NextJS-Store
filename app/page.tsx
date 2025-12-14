@@ -18,7 +18,7 @@ const Home = async () => {
 
   const bannerQuery = '*[_type == "banner"]';
   const bannerData = await client.fetch(bannerQuery);
-
+  console.log("banner", bannerData);
   return (
     <>
       <HeroBanner heroBanner={bannerData.length && bannerData[0]} />

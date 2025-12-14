@@ -119,6 +119,12 @@ export const StateContext = ({ children }) => {
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - product.quantity);
   }
 
+  const onClearCart = () => {
+    setCartItems([]);
+    setTotalPrice(0);
+    setTotalQuantities(0);
+  }
+
   return (
     <Context.Provider
       value={{
@@ -137,6 +143,7 @@ export const StateContext = ({ children }) => {
         onBuyNow,
         toggleCartItemQty,
         onRemove,
+        onClearCart,
       }}
     >
       {children}

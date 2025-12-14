@@ -6,14 +6,16 @@ import Image from 'next/image'
 import { urlFor } from '../lib/client'
 
 import { useStateContext } from '../context/StateContext'
+// import Loading from '../app/loading'
 
 const ProductDetails = ({ product}) => {
     const [index, setIndex] = useState(0);
+    // const [loading, setLoading] = useState(false);
     const { name, description, price, images } = product;
     const { decQty, incQty, qty, onAdd, onBuyNow } = useStateContext();
 
-
     return (
+        // {loading ? <Loading /> : (
         <div className="product-detail-container">
             <div>
                 <div className="product-detail-image">
