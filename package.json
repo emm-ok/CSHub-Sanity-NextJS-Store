@@ -15,7 +15,7 @@
     "@stripe/react-stripe-js": "^2.7.0",
     "@stripe/stripe-js": "^3.0.0",
     "canvas-confetti": "^1.9.4",
-    "next": "16.0.7",
+    "next": "^15.5.9",
     "next-sanity": "^11.6.10",
     "next-sanity-image": "^6.2.0",
     "react": "^18.3.1",
